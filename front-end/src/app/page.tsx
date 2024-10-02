@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import { Table, Input, Button, Modal, Form, message } from 'antd';
@@ -42,7 +42,7 @@ const UsersPage = () => {
     fetchUsers(pagination.current, pagination.pageSize, searchText);
   };
 
-  const handleSearch = (value:any) => {
+  const handleSearch = (value: any) => {
     setSearchText(value);
     fetchUsers(1, pagination.pageSize, value);
   };
@@ -73,18 +73,20 @@ const UsersPage = () => {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Surname', dataIndex: 'surname', key: 'surname' },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Age', dataIndex: 'age', key: 'age' },
-    { title: 'Country', dataIndex: 'country', key: 'country' },
-    { title: 'District', dataIndex: 'district', key: 'district' },
+    { title: 'İsim', dataIndex: 'name', key: 'name' },
+    { title: 'Soyisim', dataIndex: 'surname', key: 'surname' },
+    { title: 'E-posta', dataIndex: 'email', key: 'email' },
+    { title: 'Telefon', dataIndex: 'phone', key: 'phone' },
+    { title: 'Yaş', dataIndex: 'age', key: 'age' },
+    { title: 'Ülke', dataIndex: 'country', key: 'country' },
+    { title: 'İlçe', dataIndex: 'district', key: 'district' },
+    { title: 'Rol', dataIndex: 'role', key: 'role' },
     {
-      title: 'Action',
+      title: 'Eylem',
       key: 'action',
       render: (_: any, record: any) => (
         <Button icon={<EditOutlined />} onClick={() => showModal(record)}>
-          Edit
+          Düzenle
         </Button>
       ),
     },
@@ -92,15 +94,15 @@ const UsersPage = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Users Management</h1>
+      <h1>Kullanıcılar</h1>
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
         <Search
-          placeholder="Search users"
+          placeholder="Kullanıcı Ara"
           onSearch={handleSearch}
           style={{ width: 300 }}
         />
         <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()}>
-          Add User
+          Kullanıcı Ekle
         </Button>
       </div>
       <Table
@@ -112,31 +114,33 @@ const UsersPage = () => {
         onChange={handleTableChange}
       />
       <Modal
-        title={editingUser ? 'Edit User' : 'Add User'}
+        title={editingUser ? 'Kullanıcı Düzenle' : 'Kullanıcı Ekle'}
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={() => setIsModalVisible(false)}
+         okText="Kaydet"
+        cancelText="İptal"
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+          <Form.Item name="name" label="İsim" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="surname" label="Surname" rules={[{ required: true }]}>
+          <Form.Item name="surname" label="Soyisim" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
+          <Form.Item name="email" label="E-posta" rules={[{ required: true, type: 'email' }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="password" label="Password" rules={[{ required: !editingUser }]}>
+          <Form.Item name="password" label="Şifre" rules={[{ required: !editingUser }]}>
             <Input.Password />
           </Form.Item>
-          <Form.Item name="age" label="Age" rules={[{ type: 'number', min: 0 }]}>
+          <Form.Item name="age" label="Yaş" rules={[{ type: 'number', min: 0 }]}>
             <Input type="number" />
           </Form.Item>
-          <Form.Item name="country" label="Country">
+          <Form.Item name="country" label="Ülke">
             <Input />
           </Form.Item>
-          <Form.Item name="district" label="District">
+          <Form.Item name="district" label="İlçe">
             <Input />
           </Form.Item>
         </Form>
