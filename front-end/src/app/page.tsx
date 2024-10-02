@@ -6,8 +6,8 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table, Input, Button, Modal, Form, message, InputNumber } from 'antd';
 
 import { userService } from '../services/usersService';
-import SearchInput from '../components/Search/Search';
-import AddUserButton from '../components/Button/AddButton';
+import SearchInput from '../components/ui/Search/Search';
+import AddUserButton from '../components/ui/Button/AddButton';
 import { User } from '../types/User';
 
 const UsersPage = () => {
@@ -57,7 +57,7 @@ const UsersPage = () => {
     if (user) {
       form.setFieldsValue(user);
     } else {
-      form.resetFields(); // Formu temizle
+      form.resetFields();
     }
     
     setIsModalVisible(true);

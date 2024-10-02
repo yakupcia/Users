@@ -1,17 +1,6 @@
 import axiosInstance from '../api/axios';
 
-interface User {
-  id?: number;
-  name: string;
-  surname: string;
-  email: string;
-  phone?: string;
-  age?: number;
-  country?: string;
-  district?: string;
-  role?: string;
-}
-
+import { User } from '../types';
 interface FetchUsersParams {
   page: number;
   pageSize: number;
