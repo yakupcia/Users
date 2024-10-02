@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Layout style={{ minHeight: '100vh' }}>
           
-          <Sider trigger={null} collapsible collapsed={collapsed} style={{ background: '#001529' }}>
+          <Sider trigger={null}  collapsed={collapsed} style={{ background: '#001529' }}>
             <div className="logo" style={{ height: 64, background: 'rgba(255, 255, 255, 0.2)', margin: 16 }} />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>

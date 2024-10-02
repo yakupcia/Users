@@ -39,5 +39,10 @@ export const userService = {
 
   createUser: async (user: User): Promise<void> => {
     await axiosInstance.post('/users/save', user);
+  },
+  
+  fetchUserById: async (id: number): Promise<User> => {
+    const response = await axiosInstance.get(`/users/${id}`);
+    return response.data;
   }
 };

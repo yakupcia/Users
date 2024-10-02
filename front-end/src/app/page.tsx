@@ -2,24 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { userService } from '../services/usersService';
-
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table, Input, Button, Modal, Form, message, InputNumber } from 'antd';
-import { User } from '../types/User';
 
-const { Search } = Input;
+import { userService } from '../services/usersService';
+import SearchInput from '../components/Search/Search';
+import AddUserButton from '../components/Button/AddButton';
+import { User } from '../types/User';
 
 const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
-
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [editingUser, setEditingUser] = useState<User | null>(null);
-
 
   useEffect(() => {
     fetchUsers();
@@ -29,7 +27,7 @@ const UsersPage = () => {
     setLoading(true);
     try {
       const response = await userService.fetchUsers({ page, pageSize, search });
-      setUsers(response.users);
+      setUsers(response?.users);
       setPagination({
         ...pagination,
         current: page,
@@ -52,9 +50,16 @@ const UsersPage = () => {
     fetchUsers(1, pagination.pageSize, value);
   };
 
+
   const showModal = (user = null) => {
     setEditingUser(user);
-    form.setFieldsValue(user || {});
+    
+    if (user) {
+      form.setFieldsValue(user);
+    } else {
+      form.resetFields(); // Formu temizle
+    }
+    
     setIsModalVisible(true);
   };
 
@@ -101,14 +106,8 @@ const UsersPage = () => {
     <div style={{ padding: '20px' }}>
       <h1>Kullanıcılar</h1>
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
-        <Search
-          placeholder="Kullanıcı Ara"
-          onSearch={handleSearch}
-          style={{ width: 300 }}
-        />
-        <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()}>
-          Kullanıcı Ekle
-        </Button>
+        <SearchInput onSearch={handleSearch} placeholder='Kullanıcı Ara'/>
+        <AddUserButton onAdd={() => showModal()} label='Kullanıcı Ekle'/>
       </div>
       <Table
         columns={columns}
