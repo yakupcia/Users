@@ -1,31 +1,40 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Table, Input, Button, Modal, Form, message } from 'antd';
+
+import { userService } from '../services/usersService';
+
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import { Table, Input, Button, Modal, Form, message, InputNumber } from 'antd';
+import { User } from '../types/User';
 
 const { Search } = Input;
 
 const UsersPage = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
+
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
-  const [editingUser, setEditingUser] = useState(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const fetchUsers = async (page = 1, pageSize = 2, search = '') => {
     setLoading(true);
     try {
-      const response = await axios.get(`/users?page=${page}&pageSize=${pageSize}&search=${search}`);
-      setUsers(response.data.users);
+      const response = await userService.fetchUsers({ page, pageSize, search });
+      setUsers(response.users);
       setPagination({
         ...pagination,
         current: page,
         pageSize: pageSize,
-        total: response.data.meta.totalCount,
+        total: response.meta.totalCount,
       });
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -33,10 +42,6 @@ const UsersPage = () => {
     }
     setLoading(false);
   };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const handleTableChange = (pagination: any) => {
     fetchUsers(pagination.current, pagination.pageSize, searchText);
@@ -57,10 +62,10 @@ const UsersPage = () => {
     form.validateFields().then(async (values) => {
       try {
         if (editingUser) {
-          await axios.post('/users/update', { ...values, id: editingUser.id });
+          await userService.updateUser({ ...values, id: editingUser.id });
           message.success('User updated successfully');
         } else {
-          await axios.post('/users/save', values);
+          await userService.createUser(values);
           message.success('User added successfully');
         }
         setIsModalVisible(false);
@@ -118,7 +123,7 @@ const UsersPage = () => {
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={() => setIsModalVisible(false)}
-         okText="Kaydet"
+        okText="Kaydet"
         cancelText="İptal"
       >
         <Form form={form} layout="vertical">
@@ -134,8 +139,14 @@ const UsersPage = () => {
           <Form.Item name="password" label="Şifre" rules={[{ required: !editingUser }]}>
             <Input.Password />
           </Form.Item>
-          <Form.Item name="age" label="Yaş" rules={[{ type: 'number', min: 0 }]}>
-            <Input type="number" />
+          <Form.Item
+            name="age"
+            label="Yaş"
+            rules={[
+              { type: 'number', min: 0 },
+            ]}
+          >
+            <InputNumber style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item name="country" label="Ülke">
             <Input />
