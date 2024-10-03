@@ -33,16 +33,16 @@ npm install
 Front-end dizinine gidin ve gerekli paketleri yükleyin:
 
 ```bash
-cd back-end
+cd front-end
 npm install
 ```
 
-### 3. Backend'i Çalıştırma
+### 3. Back-end'i Çalıştırma
 
 Backend'i başlatmak için aşağıdaki komutu kullanın:
 
 ```bash
-cd backend
+cd back-end
 npm run start
 ```
 Not: PostgreSQL'in kurulu durumda olması gerekmektedir.
