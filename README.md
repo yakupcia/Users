@@ -1,6 +1,6 @@
 # Proje Adı
 
-Bu proje, bir [proje açıklaması] içermektedir. Proje, backend ve frontend bileşenlerinden oluşmaktadır.
+Bu proje, kullanıcı yönetimi üzerine geliştirilmiş bir CRUD işlemlerini içeren bir case çalışmasıdır. Backend tarafında PostgreSQL veritabanı kullanılarak kullanıcıların verileri saklanmakta ve güncellenmektedir. Frontend kısmında ise kullanıcı arayüzü üzerinden yeni kullanıcı ekleme, mevcut kullanıcıları görüntüleme, güncelleme işlemleri yapılabilmektedir. Proje, temel kullanıcı yönetimi senaryolarını öğrenmek ve uygulamak için ideal bir örnek teşkil etmektedir.
 
 ## Gereksinimler
 
