@@ -1,25 +1,13 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import knex, { Knex } from 'knex';
 import * as dotenv from 'dotenv';
+import * as bcrypt from 'bcrypt';
 
 dotenv.config();
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
   public db: Knex;
-
-  constructor() {
-    this.db = knex({
-      client: 'pg',
-      connection: {
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME || 'postgres',
-        port: parseInt(process.env.DB_PORT || '5432', 10),
-      },
-    });
-  }
 
   async onModuleInit() {
     await this.createDatabaseIfNotExists();
@@ -28,14 +16,14 @@ export class DatabaseService implements OnModuleInit {
   }
 
   private async createDatabaseIfNotExists() {
-    const dbName = 'user_service'; // Oluşturulacak veritabanının adı
+    const dbName = 'user_service';
     const defaultDbConnection = knex({
       client: 'pg',
       connection: {
         host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD,
-        database: 'postgres', // Varsayılan veritabanı
+        user: process.env.DB_USER || 'yakupkok',
+        password: process.env.DB_PASSWORD || 'yeni_sifre',
+        database: 'postgres',
         port: parseInt(process.env.DB_PORT || '5432', 10),
       },
     });
@@ -47,7 +35,7 @@ export class DatabaseService implements OnModuleInit {
       if (error.code === '42P04') {
         console.log(`Veritabanı "${dbName}" zaten mevcut`);
       } else {
-        console.error('Veritabanı oluşturulurken hata oluştu:', error);
+        console.error('Veritabanı oluşturulurken hata oluştu:', error.message);
         throw error;
       }
     } finally {
@@ -58,8 +46,8 @@ export class DatabaseService implements OnModuleInit {
       client: 'pg',
       connection: {
         host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASSWORD,
+        user: process.env.DB_USER || 'yakupkok',
+        password: process.env.DB_PASSWORD || 'yeni_sifre',
         database: dbName,
         port: parseInt(process.env.DB_PORT || '5432', 10),
       },
@@ -73,7 +61,7 @@ export class DatabaseService implements OnModuleInit {
         table.string('name', 100).notNullable();
         table.string('surname', 100).notNullable();
         table.string('email', 100).unique().notNullable();
-        table.string('password', 100).notNullable();
+        table.string('password', 255).notNullable();
         table.string('phone', 20);
         table.integer('age');
         table.string('country', 100);
@@ -93,7 +81,7 @@ export class DatabaseService implements OnModuleInit {
         name: 'Yakup',
         surname: 'KOK',
         email: 'cia@example.com',
-        password: '123',
+        password: await bcrypt.hash('123', 10), // Şifreyi hash'le
         phone: '5550243910',
         age: 24,
         country: 'Türkiye',
@@ -104,7 +92,7 @@ export class DatabaseService implements OnModuleInit {
         name: 'Sevda',
         surname: 'Kara',
         email: 'sevda@example.com',
-        password: '123',
+        password: await bcrypt.hash('123', 10), // Şifreyi hash'le
         phone: '5559876543',
         age: 25,
         country: 'Türkiye',
@@ -114,7 +102,7 @@ export class DatabaseService implements OnModuleInit {
     ];
 
     for (const user of mockUsers) {
-      await this.db('users').insert(user).onConflict('email').ignore();
+      await this.db('users').insert(user).onConflict('email').merge();
     }
     console.log('Mock data eklendi veya zaten mevcut');
   }
