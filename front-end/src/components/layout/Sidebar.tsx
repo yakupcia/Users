@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           <Link href="/">Kullanıcılar</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<PhoneOutlined />}>
-          <Link href="/">İletişim</Link>
+          <Link href="/contact">İletişim</Link>
         </Menu.Item>
       </Menu>
     </Sider>

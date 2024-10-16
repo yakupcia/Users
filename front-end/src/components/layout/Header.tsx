@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ collapsed, toggle }) => {
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={toggle}
             style={{
+              flex: 'auto',
               fontSize: '16px',
               width: 64,
               height: 64,

@@ -14,11 +14,16 @@ html, body, #__next {
 }
 
 .site-layout .site-layout-background {
-  background: red;
+  background: tomato;
 }
 
 .trigger {
   padding: 0 24px;
   font-size: 18px;
   cursor: pointer;
+}
+
+.table-container {
+  overflow-x: auto; 
+  width: 100%;
 }

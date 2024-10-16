@@ -109,14 +109,18 @@ const UsersPage = () => {
         <SearchInput onSearch={handleSearch} placeholder='Kullanıcı Ara'/>
         <AddUserButton onAdd={() => showModal()} label='Kullanıcı Ekle'/>
       </div>
-      <Table
-        columns={columns}
-        dataSource={users}
-        rowKey="id"
-        pagination={pagination}
-        loading={loading}
-        onChange={handleTableChange}
-      />
+      <div className="table-container">
+  <Table
+    columns={columns}
+    dataSource={users}
+    rowKey="id"
+    pagination={pagination}
+    loading={loading}
+    onChange={handleTableChange}
+    style={{ background: '#fff', flex: 'auto' }}
+  />
+</div>
+
       <Modal
         title={editingUser ? 'Kullanıcı Düzenle' : 'Kullanıcı Ekle'}
         visible={isModalVisible}
@@ -151,6 +155,9 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item name="district" label="İlçe">
+            <Input />
+          </Form.Item>
+          <Form.Item name="role" label="Rol">
             <Input />
           </Form.Item>
         </Form>
