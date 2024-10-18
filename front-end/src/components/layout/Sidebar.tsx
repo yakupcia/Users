@@ -12,17 +12,23 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
+  const menuItems = [
+    {
+      key: '1',
+      icon: <UserOutlined />,
+      label: <Link href="/">Kullanıcılar</Link>,
+    },
+    {
+      key: '2',
+      icon: <PhoneOutlined />,
+      label: <Link href="/contact">İletişim</Link>,
+    },
+  ];
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} style={{ background: '#001529' }}>
       <div className="logo" style={{ height: 64, background: 'rgba(255, 255, 255, 0.2)', margin: 16 }} />
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          <Link href="/">Kullanıcılar</Link>
-        </Menu.Item>
-        <Menu.Item key="2" icon={<PhoneOutlined />}>
-          <Link href="/contact">İletişim</Link>
-        </Menu.Item>
-      </Menu>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} items={menuItems} />
     </Sider>
   );
 };

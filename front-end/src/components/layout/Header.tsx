@@ -29,9 +29,7 @@ const Header: React.FC<HeaderProps> = ({ collapsed, toggle }) => {
           />
         </Col>
         <Col flex="auto" style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '20px', fontWeight: 'bold' }}>
             UsersCase
-          </span>
         </Col>
         <Col style={{ width: 64 }} /> 
       </Row>

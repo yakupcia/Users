@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 import 'antd/dist/reset.css';
+import { Suspense } from 'react';
+import Loading from './loading'; 
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,9 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Layout>{children}</Layout>
+        <Suspense fallback={<Loading />}>
+          <Layout>{children}</Layout>
+        </Suspense>
       </body>
     </html>
   );

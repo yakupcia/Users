@@ -1,4 +1,4 @@
 const hello = () => {
-    return <div>hello</div>;
+  return <h1>Hello, World!</h1>;
 }
 export default hello;

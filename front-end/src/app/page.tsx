@@ -1,10 +1,7 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from 'react';
-
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Table, Input, Button, Modal, Form, message, InputNumber } from 'antd';
-
+import { Table, Input, Button, Modal, Form, message, InputNumber, Skeleton } from 'antd';
 import { userService } from '../services/usersService';
 import SearchInput from '../components/ui/Search/Search';
 import AddUserButton from '../components/ui/Button/AddButton';
@@ -16,6 +13,7 @@ const UsersPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [formLoading, setFormLoading] = useState(false); 
   const [form] = Form.useForm();
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
@@ -23,7 +21,7 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async (page = 1, pageSize = 2, search = '') => {
+  const fetchUsers = async (page = 1, pageSize = 10, search = '') => {
     setLoading(true);
     try {
       const response = await userService.fetchUsers({ page, pageSize, search });
@@ -32,7 +30,7 @@ const UsersPage = () => {
         ...pagination,
         current: page,
         pageSize: pageSize,
-        total: response.meta.totalCount,
+        total: response.meta?.totalCount,
       });
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -50,7 +48,6 @@ const UsersPage = () => {
     fetchUsers(1, pagination.pageSize, value);
   };
 
-
   const showModal = (user = null) => {
     setEditingUser(user);
     
@@ -59,6 +56,11 @@ const UsersPage = () => {
     } else {
       form.resetFields();
     }
+    
+    setFormLoading(true);
+    setTimeout(() => { 
+      setFormLoading(false);
+    }, 1000); 
     
     setIsModalVisible(true);
   };
@@ -103,64 +105,58 @@ const UsersPage = () => {
   ];
 
   return (
+  
     <div style={{ padding: '20px' }}>
+      
       <h1>Kullanıcılar</h1>
       <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between' }}>
         <SearchInput onSearch={handleSearch} placeholder='Kullanıcı Ara'/>
         <AddUserButton onAdd={() => showModal()} label='Kullanıcı Ekle'/>
       </div>
-      <div className="table-container">
-  <Table
-    columns={columns}
-    dataSource={users}
-    rowKey="id"
-    pagination={pagination}
-    loading={loading}
-    onChange={handleTableChange}
-    style={{ background: '#fff', flex: 'auto' }}
-  />
-</div>
+      <Table
+        columns={columns}
+        dataSource={users}
+        rowKey="id"
+        pagination={pagination}
+        loading={loading}
+        onChange={handleTableChange}
+        style={{ background: '#fff', flex: 'auto' }}
+      />
 
       <Modal
         title={editingUser ? 'Kullanıcı Düzenle' : 'Kullanıcı Ekle'}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleModalOk}
         onCancel={() => setIsModalVisible(false)}
         okText="Kaydet"
         cancelText="İptal"
       >
-        <Form form={form} layout="vertical">
-          <Form.Item name="name" label="İsim" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="surname" label="Soyisim" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="email" label="E-posta" rules={[{ required: true, type: 'email' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="password" label="Şifre" rules={[{ required: !editingUser }]}>
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="age"
-            label="Yaş"
-            rules={[
-              { type: 'number', min: 0 },
-            ]}
-          >
-            <InputNumber style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="country" label="Ülke">
-            <Input />
-          </Form.Item>
-          <Form.Item name="district" label="İlçe">
-            <Input />
-          </Form.Item>
-          <Form.Item name="role" label="Rol">
-            <Input />
-          </Form.Item>
-        </Form>
+          <Form form={form} layout="vertical">
+            <Form.Item name="name" label="İsim" rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name="surname" label="Soyisim" rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name="email" label="E-posta" rules={[{ required: true, type: 'email' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name="password" label="Şifre" rules={[{ required: !editingUser }]}>
+              <Input.Password />
+            </Form.Item>
+            <Form.Item name="age" label="Yaş" rules={[{ type: 'number', min: 0 }]}>
+              <InputNumber style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item name="country" label="Ülke">
+              <Input />
+            </Form.Item>
+            <Form.Item name="district" label="İlçe">
+              <Input />
+            </Form.Item>
+            <Form.Item name="role" label="Rol">
+              <Input />
+            </Form.Item>
+          </Form>
       </Modal>
     </div>
   );
