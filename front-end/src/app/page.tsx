@@ -21,6 +21,7 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
+
   const fetchUsers = async (page = 1, pageSize = 10, search = '') => {
     setLoading(true);
     try {
