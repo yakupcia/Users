@@ -81,7 +81,7 @@ export class DatabaseService implements OnModuleInit {
         name: 'Yakup',
         surname: 'KOK',
         email: 'cia@example.com',
-        password: await bcrypt.hash('123', 10), // Şifreyi hash'le
+        password: await bcrypt.hash('123', 10),
         phone: '5550243910',
         age: 24,
         country: 'Türkiye',
@@ -92,7 +92,7 @@ export class DatabaseService implements OnModuleInit {
         name: 'Sevda',
         surname: 'Kara',
         email: 'sevda@example.com',
-        password: await bcrypt.hash('123', 10), // Şifreyi hash'le
+        password: await bcrypt.hash('123', 10),
         phone: '5559876543',
         age: 25,
         country: 'Türkiye',
