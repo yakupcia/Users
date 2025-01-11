@@ -1,64 +1,60 @@
 # Users
 
-Bu proje, kullanıcı yönetimi üzerine geliştirilmiş bir CRUD işlemlerini içeren bir case çalışmasıdır. Backend tarafında PostgreSQL veritabanı kullanılarak kullanıcıların verileri saklanmakta ve güncellenmektedir. Frontend kısmında ise kullanıcı arayüzü üzerinden yeni kullanıcı ekleme, mevcut kullanıcıları görüntüleme, güncelleme işlemleri yapılabilmektedir. Proje, temel kullanıcı yönetimi senaryolarını öğrenmek ve uygulamak için ideal bir örnek teşkil etmektedir.
+This project is a case study focused on user management, incorporating CRUD operations. On the backend, a PostgreSQL database is used to store and update user data. On the frontend, the user interface allows for adding new users, viewing existing users, and performing update operations. This project serves as an ideal example for learning and implementing basic user management scenarios.
 
-## Gereksinimler
+## Requirements
 
-Projenin çalışması için aşağıdaki yazılımların kurulu olması gerekmektedir:
+To run the project, the following software must be installed:
 
-- [Node.js](https://nodejs.org/en/) 
+- [Node.js](https://nodejs.org/en/)  
 - [PostgreSQL](https://www.postgresql.org/download/)
 
-## Kurulum
+## Setup
 
-### 1. Depoyu Klonlayın
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/yakupcia/Users.git
 cd Users
 ```
-### 2. Bağımlılıkları Yükleyin
 
-### Back-end
+### 2. Install Dependencies
 
-Back-end dizinine gidin ve gerekli paketleri yükleyin:
+#### Back-end
+
+Navigate to the back-end directory and install the necessary packages:
 
 ```bash
 cd back-end
 npm install
 ```
 
-### Front-end
+#### Front-end
 
-Front-end dizinine gidin ve gerekli paketleri yükleyin:
+Navigate to the front-end directory and install the necessary packages:
 
 ```bash
 cd front-end
 npm install
 ```
 
-### 3. Back-end'i Çalıştırma
+### 3. Run the Back-end
 
-Backend'i başlatmak için aşağıdaki komutu kullanın:
+To start the backend, use the following command:
 
 ```bash
 cd back-end
 npm run start
 ```
-Not: PostgreSQL'in kurulu durumda olması gerekmektedir.
 
-### 4. Front-end'i Çalıştırma
+**Note:** PostgreSQL must be installed and running.
 
-Frontend'i başlatmak için aşağıdaki komutu kullanın:
+### 4. Run the Front-end
+
+To start the frontend, use the following command:
 
 ```bash
 cd front-end
 npm run dev
 ```
-
-
-
-
-
-
 
